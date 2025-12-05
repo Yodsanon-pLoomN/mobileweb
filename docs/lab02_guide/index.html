@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="th">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>KKU Campus Guide - Lab 02</title>
+
+    <style>
+      /* ---------- Reset & Base ---------- */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+          sans-serif;
+        background: #f4f6fb;
+        color: #222;
+        line-height: 1.6;
+      }
+
+      img {
+        max-width: 100%;
+        display: block;
+      }
+
+      a {
+        text-decoration: none;
+      }
+
+      /* ---------- Layout ---------- */
+      header {
+        background: linear-gradient(120deg, #ff7b1a, #f15e3b);
+        color: #fff;
+        padding: 16px 0 12px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18);
+      }
+
+      .header-inner {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 0 16px;
+        display: flex;
+        align-items: center;
+        gap: 18px;
+      }
+
+      #logoCanvas {
+        border-radius: 16px;
+        background: rgba(255, 255, 255, 0.08);
+        box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.2);
+      }
+
+      .header-text h1 {
+        font-size: 1.9rem;
+        margin-bottom: 4px;
+      }
+
+      .header-text p {
+        font-size: 0.95rem;
+        opacity: 0.9;
+      }
+
+      .student-info {
+        margin-top: 8px;
+        font-size: 0.9rem;
+        padding: 6px 10px;
+        border-radius: 999px;
+        border: 1px solid rgba(255, 255, 255, 0.5);
+        display: inline-block;
+        background: rgba(0, 0, 0, 0.15);
+      }
+
+      nav {
+        margin-top: 12px;
+        border-top: 1px solid rgba(255, 255, 255, 0.2);
+      }
+
+      nav ul {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 10px 16px 4px;
+        list-style: none;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      nav a {
+        color: #fff;
+        font-size: 0.9rem;
+        padding: 6px 12px;
+        border-radius: 999px;
+        border: 1px solid rgba(255, 255, 255, 0.48);
+        background: rgba(0, 0, 0, 0.12);
+        transition: background 0.2s, transform 0.1s;
+      }
+
+      nav a:hover {
+        background: rgba(0, 0, 0, 0.22);
+        transform: translateY(-1px);
+      }
+
+      main {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 24px 16px 48px;
+      }
+
+      section {
+        margin-bottom: 32px;
+      }
+
+      section h2 {
+        font-size: 1.5rem;
+        margin-bottom: 10px;
+        color: #222;
+      }
+
+      section p {
+        font-size: 0.96rem;
+        color: #555;
+      }
+
+      /* ---------- Places (Cards + Box Model) ---------- */
+      .places-grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        margin-top: 16px;
+      }
+
+      .place-card {
+        background: #fff;
+        border-radius: 14px;
+        border: 1px solid #dde3f0; /* box model: border */
+        padding: 16px; /* box model: padding */
+        margin-bottom: 4px; /* box model: margin */
+        box-shadow: 0 6px 14px rgba(15, 23, 42, 0.08);
+        flex: 1 1 250px;
+        max-width: calc(50% - 10px);
+      }
+
+      .place-card h3 {
+        margin-bottom: 8px;
+        font-size: 1.1rem;
+        color: #1f2937;
+      }
+
+      .place-meta {
+        font-size: 0.85rem;
+        color: #6b7280;
+        margin-bottom: 10px;
+      }
+
+      .place-images {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 10px;
+      }
+
+      .place-images img {
+        width: 50%;
+        height: 150px;
+        object-fit: cover;
+        border-radius: 10px;
+        border: 3px solid #eef2ff;
+      }
+
+      .place-desc {
+        font-size: 0.9rem;
+        color: #4b5563;
+      }
+
+      /* ---------- Suggest Form ---------- */
+      #suggest-form {
+        background: #ffffff;
+        border-radius: 16px;
+        border: 1px solid #e5e7eb;
+        padding: 20px;
+        box-shadow: 0 8px 18px rgba(15, 23, 42, 0.08);
+      }
+
+      #suggest-form p {
+        margin-bottom: 12px;
+      }
+
+      form {
+        margin-top: 12px;
+      }
+
+      .form-row {
+        display: flex;
+        gap: 16px;
+        margin-bottom: 12px;
+        flex-wrap: wrap;
+      }
+
+      .form-group {
+        flex: 1 1 200px;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .form-group.full {
+        flex-basis: 100%;
+      }
+
+      label {
+        font-size: 0.9rem;
+        color: #374151;
+        margin-bottom: 6px;
+      }
+
+      input[type="text"],
+      input[type="email"],
+      input[type="url"],
+      textarea {
+        padding: 10px 12px;
+        border-radius: 8px;
+        border: 1px solid #d1d5db;
+        font-size: 0.9rem;
+        outline: none;
+        transition: border-color 0.15s, box-shadow 0.15s;
+        background: #f9fafb;
+      }
+
+      input[type="text"]:focus,
+      input[type="email"]:focus,
+      input[type="url"]:focus,
+      textarea:focus {
+        border-color: #6366f1;
+        box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.25);
+        background: #ffffff;
+      }
+
+      textarea {
+        min-height: 90px;
+        resize: vertical;
+      }
+
+      .submit-row {
+        margin-top: 10px;
+        display: flex;
+        justify-content: flex-end;
+      }
+
+      button[type="submit"] {
+        border: none;
+        border-radius: 999px;
+        padding: 10px 22px;
+        font-size: 0.95rem;
+        font-weight: 600;
+        cursor: pointer;
+        background: linear-gradient(135deg, #6366f1, #4f46e5);
+        color: #fff;
+        box-shadow: 0 8px 15px rgba(79, 70, 229, 0.25);
+        transition: transform 0.1s, box-shadow 0.1s;
+      }
+
+      button[type="submit"]:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 12px 25px rgba(79, 70, 229, 0.3);
+      }
+
+      footer {
+        background: #111827;
+        color: #9ca3af;
+        font-size: 0.8rem;
+        text-align: center;
+        padding: 14px 12px;
+      }
+
+      /* ---------- Responsive ---------- */
+      @media (max-width: 900px) {
+        .place-card {
+          max-width: 100%;
+        }
+
+        .header-inner {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+
+        #logoCanvas {
+          width: 100%;
+          max-width: 260px;
+        }
+      }
+
+      @media (max-width: 600px) {
+        nav ul {
+          justify-content: center;
+        }
+
+        .places-grid {
+          flex-direction: column;
+        }
+
+        .place-images {
+          flex-direction: column;
+        }
+
+        .place-images img {
+          width: 100%;
+          height: 170px;
+        }
+
+        main {
+          padding-inline: 12px;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- ========== HEADER + NAV + LOGO CANVAS ========== -->
+    <header>
+      <div class="header-inner">
+        <!-- Canvas Logo with Animation -->
+        <canvas
+          id="logoCanvas"
+          width="240"
+          height="80"
+          aria-label="KKU Campus Guide Logo"
+        >
+          โลโก้ KKU Campus Guide
+        </canvas>
+
+        <div class="header-text">
+          <h1>KKU Campus Guide</h1>
+          <p>แนะนำสถานที่เด่นภายในมหาวิทยาลัยขอนแก่น</p>
+          <p class="student-info">
+            รหัสนักศึกษา 663380021-5 | นายยศนนท์ ดวงไข
+          </p>
+        </div>
+      </div>
+
+      <nav>
+        <ul>
+          <li><a href="#intro">ภาพรวม</a></li>
+          <li><a href="#places">สถานที่แนะนำ</a></li>
+          <li><a href="#suggest-form">แบบฟอร์มแนะนำสถานที่</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <!-- ========== MAIN CONTENT ========== -->
+    <main>
+      <!-- บทนำ -->
+      <section id="intro">
+        <h2>ยินดีต้อนรับสู่ KKU Campus Guide</h2>
+        <p>
+          หน้านี้จัดทำขึ้นเพื่อแนะนำสถานที่สำคัญบริเวณคณะวิทยาศาสตร์
+          มหาวิทยาลัยขอนแก่น
+          สำหรับนักศึกษาใหม่และผู้ที่มาใช้งานอาคารต่าง ๆ
+          จะได้วางแผนการเดินทางและใช้งานพื้นที่ได้สะดวกยิ่งขึ้น
+        </p>
+      </section>
+
+      <!-- สถานที่ต่าง ๆ -->
+      <section id="places">
+        <h2>สถานที่แนะนำภายในคณะวิทยาศาสตร์</h2>
+        <p>
+          แต่ละอาคารจะมีลักษณะและการใช้งานแตกต่างกันไป
+          ทั้งห้องเรียนปกติ ห้องแลป ห้องประชุม
+          รวมถึงพื้นที่ส่วนกลางสำหรับกิจกรรมของนักศึกษา
+        </p>
+
+        <div class="places-grid">
+          <!-- 1. อาคารวิทยวิภาส -->
+          <article id="place-vitivipas" class="place-card">
+            <h3>อาคารวิทยวิภาส</h3>
+            <p class="place-meta">อาคารเรียนและห้องประชุมขนาดใหญ่</p>
+
+            <div class="place-images">
+              <!-- เปลี่ยนชื่อไฟล์ภาพตามที่มีจริงในโฟลเดอร์ assets -->
+              <img src="assets/9_1.jpg" alt="ด้านหน้าอาคารวิทยวิภาส" />
+              <img src="assets/9_2.jpg" alt="มุมด้านข้างอาคารวิทยวิภาส" />
+            </div>
+
+            <p class="place-desc">
+              อาคารวิทยวิภาสเป็นอาคารเรียนหลักของสาขาวิชาฟิสิกส์
+              หลักสูตรวัสดุศาสตร์และนาโนเทคโนโลยี
+              รวมถึงหลักสูตรแบตเตอร์รี่และพลังงานใหม่
+              ภายในมีห้องประชุมวิทยวิภาส 1 และ 2
+              ที่ใช้จัดสัมมนาและการสอบสัมภาษณ์อยู่เป็นประจำ
+            </p>
+          </article>
+
+          <!-- 2. อาคาร SC.08 -->
+          <article id="place-sc08" class="place-card">
+            <h3>อาคาร SC.08</h3>
+            <p class="place-meta">อาคารแลปและห้องเรียนด้านวิทยาศาสตร์</p>
+
+            <div class="place-images">
+              <img src="assets/8_1.jpg" alt="ด้านหน้าอาคาร SC.08" />
+              <img src="assets/8_2.jpg" alt="บริเวณรอบอาคาร SC.08" />
+            </div>
+
+            <p class="place-desc">
+              อาคาร SC.08 เป็นอาคารสำหรับการเรียนการสอนของสาขาวิชาวิทยาศาสตร์สิ่งแวดล้อม
+              ภายในมีห้องปฏิบัติการทางวิทยาศาสตร์
+              ทั้งทางเคมี ชีววิทยา และฟิสิกส์
+              รวมถึงมีสำนักงานของสาขาวิชาวิทยาศาสตร์บูรณาการอยู่ในอาคารเดียวกัน
+            </p>
+          </article>
+
+          <!-- 3. อาคาร SC.06 -->
+          <article id="place-sc06" class="place-card">
+            <h3>อาคาร SC.06</h3>
+            <p class="place-meta">อาคารสำนักงานและห้องเรียนบัณฑิตศึกษา</p>
+
+            <div class="place-images">
+              <img src="assets/6_1.jpg" alt="ด้านหน้าอาคาร SC.06" />
+              <img src="assets/6_2.jpg" alt="ทางเดินภายในอาคาร SC.06" />
+            </div>
+
+            <p class="place-desc">
+              อาคาร SC.06 เป็นที่ตั้งของสาขาวิชาสถิติ
+              และสำนักงานคณบดีคณะวิทยาศาสตร์
+              บริเวณนี้มักใช้เป็นสถานที่ติดต่อราชการ
+              และเป็นจุดนัดหมายสำคัญของอาจารย์และบุคลากร
+            </p>
+          </article>
+
+          <!-- 4. อาคาร SC.05 -->
+          <article id="place-sc05" class="place-card">
+            <h3>อาคาร SC.05</h3>
+            <p class="place-meta">อาคารเรียนรวมและสโมสรนักศึกษา</p>
+
+            <div class="place-images">
+              <img src="assets/5_1.jpg" alt="ด้านหน้าอาคาร SC.05" />
+              <img src="assets/5_2.jpg" alt="พื้นที่กิจกรรมนักศึกษาที่ SC.05" />
+            </div>
+
+            <p class="place-desc">
+              อาคาร SC.05 เป็นอาคารเรียนรวมที่ใช้เปิดสอนหลายสาขาวิชา
+              ชั้นล่างของอาคารยังเป็นที่ตั้งของสโมสรนักศึกษาคณะวิทยาศาสตร์
+              ซึ่งจัดกิจกรรมต่าง ๆ เช่น รับน้องเชียร์ การประชุม และงานสันทนาการ
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <!-- แบบฟอร์มแนะนำสถานที่ -->
+      <section id="suggest-form">
+        <h2>แบบฟอร์มแนะนำสถานที่ในมหาวิทยาลัยขอนแก่น</h2>
+        <p>
+          หากคุณมีสถานที่น่าสนใจใน มข.
+          ที่อยากแนะนำสำหรับเพื่อน ๆ นักศึกษา สามารถกรอกแบบฟอร์มด้านล่างนี้
+          ข้อมูลจะถูกส่งผ่านบริการ <strong>Web3Forms</strong> ไปยังผู้จัดทำ
+        </p>
+
+        <form action="https://api.web3forms.com/submit" method="POST">
+          <!-- ใช้ access_key ของเราเองที่สมัครจาก web3forms -->
+          <input
+            type="hidden"
+            name="access_key"
+            value="336af4f3-2970-4fea-898a-6cd99e5e0562"
+          />
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="place_name">ชื่อสถานที่ที่ต้องการแนะนำ *</label>
+              <input
+                type="text"
+                id="place_name"
+                name="place_name"
+                placeholder="เช่น สนามกีฬา 50 ปี, สวนเกษตร"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="image_url">URL ของภาพประกอบ *</label>
+              <input
+                type="url"
+                id="image_url"
+                name="image_url"
+                placeholder="ลิงก์รูปภาพของสถานที่ (เช่น https://...)"
+                required
+              />
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group full">
+              <label for="detail">รายละเอียดสถานที่ *</label>
+              <textarea
+                id="detail"
+                name="detail"
+                placeholder="อธิบายบรรยากาศ การใช้งาน และคำแนะนำการเดินทางไปยังสถานที่นี้"
+                required
+              ></textarea>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="sender_name">ชื่อผู้แนะนำ</label>
+              <input
+                type="text"
+                id="sender_name"
+                name="sender_name"
+                placeholder="ชื่อเล่น หรือชื่อ-สกุลของคุณ"
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="email">อีเมลสำหรับติดต่อกลับ (ถ้ามี)</label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                placeholder="example@student.kku.ac.th"
+              />
+            </div>
+          </div>
+
+          <div class="submit-row">
+            <button type="submit">ส่งข้อมูลแนะนำสถานที่</button>
+          </div>
+        </form>
+      </section>
+    </main>
+
+    <!-- ========== FOOTER ========== -->
+    <footer>
+      KKU Campus Guide &copy; 2025 | จัดทำเพื่อการเรียนการสอนรายวิชา Mobile Web
+      Application Development
+    </footer>
+
+    <!-- ========== CANVAS LOGO ANIMATION SCRIPT ========== -->
+    <script>
+      const canvas = document.getElementById("logoCanvas");
+      const ctx = canvas.getContext("2d");
+
+      const w = canvas.width;
+      const h = canvas.height;
+
+      let angle = 0;
+      let pulse = 0;
+      let pulseDir = 1;
+
+      function drawLogo() {
+        ctx.clearRect(0, 0, w, h);
+
+        // พื้นหลังโค้งมน
+        ctx.save();
+        const radius = 18;
+        ctx.beginPath();
+        ctx.moveTo(radius, 0);
+        ctx.lineTo(w - radius, 0);
+        ctx.quadraticCurveTo(w, 0, w, radius);
+        ctx.lineTo(w, h - radius);
+        ctx.quadraticCurveTo(w, h, w - radius, h);
+        ctx.lineTo(radius, h);
+        ctx.quadraticCurveTo(0, h, 0, h - radius);
+        ctx.lineTo(0, radius);
+        ctx.quadraticCurveTo(0, 0, radius, 0);
+        ctx.closePath();
+
+        const bgGradient = ctx.createLinearGradient(0, 0, w, h);
+        bgGradient.addColorStop(0, "rgba(255,255,255,0.2)");
+        bgGradient.addColorStop(1, "rgba(255,255,255,0.05)");
+        ctx.fillStyle = bgGradient;
+        ctx.fill();
+
+        // วงกลมหมุนรอบ
+        const centerX = 60;
+        const centerY = h / 2;
+        const orbitRadius = 18;
+
+        const orbX = centerX + Math.cos(angle) * orbitRadius;
+        const orbY = centerY + Math.sin(angle) * orbitRadius;
+
+        ctx.beginPath();
+        ctx.arc(centerX, centerY, 14, 0, Math.PI * 2);
+        ctx.fillStyle = "rgba(255, 255, 255, 0.9)";
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.arc(orbX, orbY, 6, 0, Math.PI * 2);
+        ctx.fillStyle = "rgba(249, 115, 22, 1)"; // สีส้มเข้ม
+        ctx.fill();
+
+        // ตัวอักษร KKU
+        ctx.fillStyle = "#f97316";
+        ctx.font = "bold 20px system-ui";
+        ctx.textBaseline = "middle";
+        ctx.fillText("KKU", 36, centerY - 18);
+
+        // Pulse ข้อความ Campus Guide
+        const baseFontSize = 14;
+        const pulseOffset = Math.sin(pulse) * 1.5;
+
+        ctx.fillStyle = "#ffffff";
+        ctx.font = `600 ${baseFontSize + pulseOffset}px system-ui`;
+        ctx.fillText("Campus Guide", 90, centerY - 4);
+
+        ctx.restore();
+
+        angle += 0.06;
+        pulse += 0.08;
+        requestAnimationFrame(drawLogo);
+      }
+
+      drawLogo();
+    </script>
+  </body>
+</html>
