@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lab 4 - Ionic Photo Gallery</title>
+
+  <style>
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background: #f5f5f5;
+    }
+    h1 {
+      text-align: center;
+    }
+    .container {
+      max-width: 900px;
+      margin: auto;
+      background: #ffffff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+    .screenshots {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+      margin-top: 20px;
+    }
+    .screenshots img {
+      width: 100%;
+      border-radius: 6px;
+      border: 1px solid #ddd;
+    }
+    .download {
+      text-align: center;
+      margin-top: 30px;
+    }
+    .download a {
+      display: inline-block;
+      padding: 12px 20px;
+      background: #3880ff;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 6px;
+      font-weight: bold;
+    }
+    .download a:hover {
+      background: #3171e0;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h1>Lab 4: Ionic Photo Gallery</h1>
+
+    <p>
+      Lab นี้เป็นการพัฒนา Mobile Application ด้วย Ionic Framework
+      โดยใช้ Capacitor Camera เพื่อถ่ายภาพ และแสดงผลเป็น Photo Gallery
+      พร้อมบันทึกข้อมูลรูปภาพไว้ในเครื่อง
+    </p>
+
+    <h2>ตัวอย่างหน้าจอ (Screenshot)</h2>
+    <div class="screenshots">
+      <!-- เปลี่ยนชื่อไฟล์รูปตามของคุณ -->
+      <img src="images/1.png" alt="Lab4 Screenshot 1">
+      <img src="images/2.png" alt="Lab4 Screenshot 2">
+      <img src="images/3.png" alt="Lab4 Screenshot 3">
+    </div>
+
+    <div class="download">
+      <h2>ดาวน์โหลดแอปพลิเคชัน</h2>
+      <!-- วางไฟล์ .apk ไว้ใน docs/apk/ -->
+      <a href="apk/app-debug.apk" download>
+        ดาวน์โหลดไฟล์ APK
+      </a>
+    </div>
+  </div>
+</body>
+</html>
