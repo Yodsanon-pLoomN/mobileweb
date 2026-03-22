@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lab 8 - Ionic Gemini Vision AI</title>
+
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background: #f0f2f5;
+      color: #333;
+    }
+    h1 {
+      text-align: center;
+      color: #003580;
+    }
+    .container {
+      max-width: 1000px;
+      margin: auto;
+      background: #ffffff;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    .description {
+      line-height: 1.6;
+      margin-bottom: 25px;
+      color: #555;
+    }
+    .screenshots {
+      display: grid;
+      /* ปรับให้รองรับ 5 รูปได้สวยงาม */
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 20px;
+      margin-top: 20px;
+    }
+    .screenshots div {
+      text-align: center;
+    }
+    .screenshots img {
+      width: 100%;
+      border-radius: 10px;
+      border: 2px solid #eee;
+      transition: transform 0.3s;
+    }
+    .screenshots img:hover {
+      transform: scale(1.05);
+      border-color: #3880ff;
+    }
+    .screenshots p {
+      font-size: 0.9rem;
+      margin-top: 8px;
+      color: #666;
+    }
+    .download {
+      text-align: center;
+      margin-top: 40px;
+      padding-top: 20px;
+      border-top: 1px solid #eee;
+    }
+    .download a {
+      display: inline-block;
+      padding: 15px 30px;
+      background: #10dc60; /* สีเขียวสำหรับความสำเร็จ */
+      color: #fff;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: bold;
+      box-shadow: 0 4px 10px rgba(16, 220, 96, 0.3);
+    }
+    .download a:hover {
+      background: #0ebc52;
+      transform: translateY(-2px);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h1>Lab 8: Gemini Vision AI</h1>
+
+    <div class="description">
+      <p>
+        Lab นี้เป็นการพัฒนาแอปพลิเคชันที่ผสานความสามารถของ Generative AI โดยใช้ <strong>Gemini Vision API</strong> (ผ่าน Firebase App Check เพื่อความปลอดภัย) ร่วมกับโครงสร้างของ Ionic React 
+        ผู้ใช้สามารถเลือกรูปภาพจากแกลลอรี หรือถ่ายภาพใหม่ผ่านกล้องมือถือ เพื่อส่งให้ AI ทำการวิเคราะห์ภาพ และรับผลลัพธ์กลับมาแสดงผลบนหน้าจอในรูปแบบ Structured Data (JSON)
+      </p>
+    </div>
+
+    <h2>หลักฐานการดำเนินงาน</h2>
+    <div class="screenshots">
+      <div>
+        <img src="images/1.png" alt="หน้าแอปพลิเคชันหลัก">
+        <p>1</p>
+      </div>
+      <div>
+        <img src="images/2.png" alt="เลือกภาพจากแกลลอรี">
+        <p>2</p>
+      </div>
+      <div>
+        <img src="images/3.png" alt="การถ่ายภาพผ่านกล้อง">
+        <p>3</p>
+      </div>
+      <div>
+        <img src="images/4.png" alt="กำลังวิเคราะห์ภาพ">
+        <p>4</p>
+      </div>
+      <div>
+        <img src="images/5.png" alt="ผลลัพธ์จาก AI">
+        <p>5</p>
+      </div>
+    </div>
+
+    <div class="download">
+      <h2>ทดสอบแอปพลิเคชันบน Android</h2>
+      <p>คุณสามารถดาวน์โหลดไฟล์ APK เพื่อทดสอบระบบบนมือถือจริงได้ที่นี่</p>
+      <a href="apk/lab08-ai.apk" download>
+        ⬇️ ดาวน์โหลดไฟล์ APK (Lab 08)
+      </a>
+    </div>
+  </div>
+</body>
+</html>
